@@ -1,0 +1,13 @@
+module Test where
+
+data bool : Set Where
+  true : bool
+  false : bool
+
+data primary-color : Set where
+  red : primary-color
+  green : primary-color
+  blue : primary-color
+
+is-red : primary-color -> bool
+is-red c = ?
