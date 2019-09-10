@@ -1,10 +1,9 @@
-
-    
 {-
-Name:Duncan Enzmann
-Date: 09/04/2019
+Name: ⁇
+Date: ⁇
+
 Collaboration & Resources Statement:
-«Completed this homework using notes from class Had help from Sami Connolly with Commands  (C^c C^c) specifically»
+«Write your statement here…»
 -}
 
 ---------------
@@ -38,7 +37,7 @@ Collaboration & Resources Statement:
 -- within the holes and your entire assignment compiles without
 -- errors, you are guaranteed 100% on the assignment.*
 
-module HW1 where
+module test where
 
 ---------
 -- LIB --
@@ -98,23 +97,19 @@ open Lib public
 fuzzy-would-pet : ∀ (a : animal) → is-fuzzy a ≡ True → would-pet[ a ]
 fuzzy-would-pet Cat ↯ = would-pet-cat
 fuzzy-would-pet Dog ↯ = would-pet-dog
-fuzzy-would-pet Fish ()
 
 -- E2: [★☆☆]
 -- HINT: do case analysis on `a`, then `f[a]` and then `b[a]`
 dogs-are-fuzzy-and-burpy : ∀ (a : animal) → is-fuzzy a ≡ True → is-burpy a ≡ True → a ≡ Dog
-dogs-are-fuzzy-and-burpy Cat ↯ ()
-dogs-are-fuzzy-and-burpy Dog ↯ ↯ = ↯
-dogs-are-fuzzy-and-burpy Fish ()
+dogs-are-fuzzy-and-burpy Dog ↯ ↯ = {!↯!}
 
 -- E3: [★☆☆]
 -- HINT: use `↯`
 one-plus-one-is-two : 1 + 1 ≡ 2
-one-plus-one-is-two = ↯
+one-plus-one-is-two = {!!}
 
 -- E4: [★☆☆]
 -- HINT: do case analysis (C-c C-c) on the proof of equality `n≡2`
 -- HINT: use `↯`
 two-plus-two-is-four : ∀ (n : ℕ) → n ≡ 2 → n + 2 ≡ 4
-two-plus-two-is-four .2 ↯ = ↯
-
+two-plus-two-is-four n n≡2 = {!!}
