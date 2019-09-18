@@ -1,9 +1,9 @@
 {-
-Name: ⁇
-Date: ⁇
+Name: Duncan
+Date:9/11/2019
 
 Collaboration & Resources Statement:
-«Write your statement here…»
+«Had some help with "with ... | IH rewrite" from Sami Connolly»
 -}
 
 ---------------
@@ -169,14 +169,17 @@ assoc-swap[+] m n p rewrite commu[+] m n | assoc[+] n m p = ↯
 -- HINT: use `assoc[+]`
 rdist[×] : ∀ (m n p : ℕ) → (m + n) × p ≡ m × p + n × p
 rdist[×] Z n p = ↯
-rdist[×] (S m) n p rewrite rdist[×] m n p = {!assoc[+] m n  p!}
+rdist[×] (S m) n p with rdist[×] m n p
+... | IH rewrite IH | assoc[+] p (m × p) (n × p) = ↯
 
 -- E6: [★★☆]
 -- Prove that multiplication is associative.
 -- HINT: do induction on `m`
 -- HINT: use `rdist[×]`
 assoc[×] : ∀ (m n p : ℕ) → (m × n) × p ≡ m × (n × p) 
-assoc[×] m n p = {!!}
+assoc[×] Z n p = ↯
+assoc[×] (S m) n p with rdist[×] n (m × n) p
+... | IH rewrite IH | assoc[×] m n p = ↯
 
 -- E7: [★☆☆]
 -- Prove that 0 is a right zero for multiplication.
@@ -197,17 +200,25 @@ runit[×] (S m) rewrite runit[×] m = ↯
 -- HINT: do induction on `m`
 -- HINT: use `assoc[+]` and `commu[+]`
 reduc[×] : ∀ (m n : ℕ) → m × S n ≡ m + m × n
-reduc[×] m n = {!!}
+reduc[×] Z n = ↯
+reduc[×] (S m) n with reduc[×] m n
+-- ... | IH rewrite IH | assoc[+] m n (m × n) | commu[+] m n | assoc[+] n m (m × n) = ↯
+... | IH rewrite IH | assoc[+] m n (m × n) | commu[+] m n  = {!!}
 
 -- E10: [★★☆]
 -- Prove that multiplication is commutative
 -- HINT: do induction on `m`
 -- HINT: use `rzero[×]` and `reduc[×]`
 commu[×] : ∀ (m n : ℕ) → m × n ≡ n × m
-commu[×] m n = {!!}
+commu[×] Z n rewrite rzero[×] n = ↯
+commu[×] (S m) n with reduc[×] n m 
+... | IH rewrite IH | commu[×] m n = ↯
 
 -- E11: [★★☆]
 -- Prove a funny associativity property for “monus”
 -- HINT: do induction on *both* `m` and `n`
 assoc[∸] : ∀ (m n p : ℕ) → m ∸ n ∸ p ≡ m ∸ (n + p)
-assoc[∸] m n p = {!!}
+assoc[∸] Z Z p = ↯
+assoc[∸] Z (S n) p = ↯
+assoc[∸] (S m) Z p = ↯
+assoc[∸] (S m) (S n) p rewrite assoc[∸] m n p = ↯

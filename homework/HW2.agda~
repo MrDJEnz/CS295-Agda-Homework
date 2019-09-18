@@ -1,9 +1,9 @@
 {-
-Name: ⁇
-Date: ⁇
+Name: Duncan
+Date:9/11/2019
 
 Collaboration & Resources Statement:
-«Write your statement here…»
+«Had some help with "with ... | IH rewrite" from Sami Connolly»
 -}
 
 ---------------
@@ -93,7 +93,10 @@ open Lib public
 -- Define logical conjunction.
 infixl 6 _⩓_
 _⩓_ : 𝔹 → 𝔹 → 𝔹
-b₁ ⩓ b₂ = {!!}
+True ⩓ True = True
+True ⩓ False = False
+False ⩓ True = False
+False ⩓ False = False
 
 -- test cases: these will check your work for you!
 _ : True ⩓ True ≡ True
@@ -115,7 +118,10 @@ _ = ↯
 -- Define logical disjunction.
 infixl 5 _⩔_
 _⩔_ : 𝔹 → 𝔹 → 𝔹
-b₁ ⩔ b₂ = {!!}
+True ⩔ True = True
+True ⩔ False = True
+False ⩔ True = True
+False ⩔ False = False
 
 -- test cases: these will check your work for you!
 _ : True ⩔ True ≡ True
@@ -135,7 +141,8 @@ _ = ↯
 -- Define exponentiation.
 infixr 7 _^_
 _^_ : ℕ → ℕ → ℕ
-m ^ n = {!!}
+m ^ Z = 1
+m ^ S n = _×_(_^_ m n)m
 
 -- test cases: these will check your work for you!
 _ : 2 ^ 4 ≡ 16
@@ -153,7 +160,7 @@ _ = ↯
 -- HINT: use equational reasoning (not induction)
 -- HINT: use lemmas `commu[+]` and `assoc[+]`
 assoc-swap[+] : ∀ (m n p : ℕ) → (m + n) + p ≡ n + (m + p)
-assoc-swap[+] m n p = {!!}
+assoc-swap[+] m n p rewrite commu[+] m n | assoc[+] n m p = ↯
 
 -- E5: [★★☆]
 -- Prove that addition distributes through multiplication from the
@@ -161,43 +168,56 @@ assoc-swap[+] m n p = {!!}
 -- HINT: do induction on `m`
 -- HINT: use `assoc[+]`
 rdist[×] : ∀ (m n p : ℕ) → (m + n) × p ≡ m × p + n × p
-rdist[×] m n p = {!!}
+rdist[×] Z n p = ↯
+rdist[×] (S m) n p with rdist[×] m n p
+... | IH rewrite IH | assoc[+] p (m × p) (n × p) = ↯
 
 -- E6: [★★☆]
 -- Prove that multiplication is associative.
 -- HINT: do induction on `m`
 -- HINT: use `rdist[×]`
 assoc[×] : ∀ (m n p : ℕ) → (m × n) × p ≡ m × (n × p) 
-assoc[×] m n p = {!!}
+assoc[×] Z n p = ↯
+assoc[×] (S m) n p with rdist[×] n (m × n) p
+... | IH rewrite IH | assoc[×] m n p = ↯
 
 -- E7: [★☆☆]
 -- Prove that 0 is a right zero for multiplication.
 -- HINT: do induction on `m`
 rzero[×] : ∀ (m : ℕ) → m × 0 ≡ 0
-rzero[×] m = {!!}
+rzero[×] Z = ↯
+rzero[×] (S m) rewrite rzero[×] m = ↯
 
 -- E8: [★☆☆]
 -- Prove that 1 is a right unit for multiplication.
 -- HINT: do induction on `m`
 runit[×] : ∀ (m : ℕ) → m × 1 ≡ m
-runit[×] m = {!!}
+runit[×] Z = ↯
+runit[×] (S m) rewrite runit[×] m = ↯
 
 -- E9: [★★★]
 -- Prove a fact about multiplication.
 -- HINT: do induction on `m`
 -- HINT: use `assoc[+]` and `commu[+]`
 reduc[×] : ∀ (m n : ℕ) → m × S n ≡ m + m × n
-reduc[×] m n = {!!}
+reduc[×] Z n = ↯
+reduc[×] (S m) n with reduc[×] m n
+... | IH rewrite IH | assoc[+] m n (m × n) | commu[+] m n | assoc[+] n m (m × n) = ↯
 
 -- E10: [★★☆]
 -- Prove that multiplication is commutative
 -- HINT: do induction on `m`
 -- HINT: use `rzero[×]` and `reduc[×]`
 commu[×] : ∀ (m n : ℕ) → m × n ≡ n × m
-commu[×] m n = {!!}
+commu[×] Z n rewrite rzero[×] n = ↯
+commu[×] (S m) n with reduc[×] n m 
+... | IH rewrite IH | commu[×] m n = ↯
 
 -- E11: [★★☆]
 -- Prove a funny associativity property for “monus”
 -- HINT: do induction on *both* `m` and `n`
 assoc[∸] : ∀ (m n p : ℕ) → m ∸ n ∸ p ≡ m ∸ (n + p)
-assoc[∸] m n p = {!!}
+assoc[∸] Z Z p = ↯
+assoc[∸] Z (S n) p = ↯
+assoc[∸] (S m) Z p = ↯
+assoc[∸] (S m) (S n) p rewrite assoc[∸] m n p = ↯
